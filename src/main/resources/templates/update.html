@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Course Tracker</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Course Tracker</h1>
+        <hr>
+        <h2>Update Course</h2>
+
+        <form action="#" th:action="@{/save}" th:object="${course}" method="POST">
+            <input type="hidden" th:field="*{id}" />
+            <div class="row">
+				<input type="text" th:field="*{courseName}" placeholder="Course Name" class="form-control mb-4 col-4">
+				<span th:if="${#fields.hasErrors('courseName')}" th:errors="*{courseName}"
+					class="text-danger mx-4"></span>
+			</div>
+			<div class="row">
+				<input type="text" th:field="*{instructor}" placeholder="Instructor Name"
+					class="form-control mb-4 col-4">
+				<span th:if="${#fields.hasErrors('instructor')}" th:errors="*{instructor}"
+					class="text-danger mx-4"></span>
+			</div>
+			<div class="row">
+				<input type="text" th:field="*{email}" placeholder="Course Email" class="form-control mb-4 col-4">
+				<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger mx-4"></span>
+			</div>
+            <button type="submit" class="btn btn-info col-2"> Update Course</button>
+        </form>
+
+        <hr>
+
+        <a th:href="@{/}"> Back to Course List</a>
+    </div>
+</body>
+
+</html>
