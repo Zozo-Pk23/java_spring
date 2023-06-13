@@ -1,42 +1,47 @@
-package com.example.demo;
+package com.example.demo.controller;
 
 import org.springframework.web.bind.annotation.*;
-
 import jakarta.validation.Valid;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import com.example.demo.model.Course;
+import com.example.demo.service.CourseService;
 
 import java.util.List;
 
 @Controller
-public class MainController {
+public class CourseController {
+
     private final CourseService courseService;
 
-    public MainController(CourseService courseService) {
+    public CourseController(CourseService courseService) {
         this.courseService = courseService;
     }
 
     @GetMapping("/")
-    public String index(Model model) {
-        List<Course> courses = courseService.getAllCourses();
-        model.addAttribute("courses", courses);
-        return "index";
+    public String searchCourses(
+            @RequestParam(value = "courseName", required = false, defaultValue = "") String courseName,
+            @RequestParam(value = "instructor", required = false, defaultValue = "") String instructor,
+            @RequestParam(value = "email", required = false, defaultValue = "") String email,
+            Model model) {
+        List<Course> searchResults = courseService.searchCourses(courseName, instructor, email);
+        model.addAttribute("courses", searchResults);
+        return "courses/index";
     }
 
     @GetMapping("/add")
     public String add(Model model) {
         Course Course = new Course();
         model.addAttribute("course", Course);
-        return "add";
+        return "courses/add";
     }
 
     @PostMapping("/save")
     public String saveCourse(@Valid @ModelAttribute("course") Course course,
             BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "add"; // Return to the form with validation errors
+            return "courses/add"; // Return to the form with validation errors
         } else {
             courseService.saveCourse(course);
             return "redirect:/"; // Redirect to a success page
@@ -47,7 +52,7 @@ public class MainController {
     public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
         Course course = courseService.getCourseById(id);
         model.addAttribute("course", course);
-        return "update";
+        return "courses/update";
     }
 
     @GetMapping("/delete/{id}")

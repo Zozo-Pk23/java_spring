@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Course</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
+<body>
+    <div th:replace="~{commons/header :: content}"></div>
+    <div class="container my-2">
+        <h1>Student Tracker</h1>
+        <hr>
+        <h2>Save Student</h2>
+        <form action="#" th:action="@{/student/save}" th:object="${student}" method="POST">
+            <div class="row">
+                <input th:field="*{studentName}" type="text" placeholder="Student Name" class="form-control mb-4 col-4">
+                    <span th:if="${#fields.hasErrors('studentName')}" th:errors="*{studentName}"
+                        class="text-danger mx-4"></span>
+            </div>
+            <div class="row">
+                <input th:field="*{studentEmail}" type="text" placeholder="Student Email"
+                    class="form-control mb-4 col-4">
+                <span th:if="${#fields.hasErrors('studentEmail')}" th:errors="*{studentEmail}"
+                    class="text-danger mx-4"></span>
+            </div>
+            <div class="row">
+                <select th:field="*{course.id}" class="form-control mb-4 col-4">
+                    <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.courseName}">
+                    </option>
+                </select>
+            </div>
+            <div class="row">
+                <input th:field="*{mark}" type="text" placeholder="Mark" class="form-control mb-4 col-4">
+                <span th:if="${#fields.hasErrors('mark')}" th:errors="*{mark}"
+                    class="text-danger mx-4"></span>
+            </div>
+            <button type="submit" class="btn btn-info col-2">Save Course</button>
+        </form>
+
+        <hr>
+        <a th:href="@{/student/index}">Back to Student List</a>
+    </div>
+</body>
+
+</html>
