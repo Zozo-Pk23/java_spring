@@ -34,9 +34,9 @@ public class StudentController {
     public String index(@RequestParam(value = "studentName", defaultValue = "") String studentName,
             @RequestParam(value = "studentEmail", defaultValue = "") String studentEmail,
             @RequestParam(value = "courseName", defaultValue = "") String courseName,
-            @RequestParam(value = "mark_start", required = false) Integer markStart,
-            @RequestParam(value = "mark_end", required = false) Integer markEnd, Model model) {
-        List<Student> students = studentService.getAllStudents();
+            @RequestParam(value = "mark_start", defaultValue = "") Integer markStart,
+            @RequestParam(value = "mark_end", defaultValue = "") Integer markEnd, Model model) {
+        List<Student> students = studentService.searchStudents(studentName,courseName,studentEmail,markStart,markEnd);
         model.addAttribute("students", students);
         model.addAttribute("courses", courses); 
         return "students/index";

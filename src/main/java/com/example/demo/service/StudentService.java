@@ -8,8 +8,7 @@ import com.example.demo.repository.StudentRepository;
 import java.util.List;
 
 @Service
-public class StudentService
- {
+public class StudentService {
     private final StudentRepository studentRepository;
 
     public StudentService(StudentRepository StudentRepository) {
@@ -30,5 +29,18 @@ public class StudentService
 
     public void deleteStudent(Long id) {
         studentRepository.deleteById(id);
+    }
+
+    public List<Student> searchStudents(String studentName, String courseName, String studentEmail,
+            Integer markStart, Integer markEnd) {
+        if (studentName.isEmpty() && courseName.isEmpty() && studentEmail.isEmpty() && markStart == null
+                && markEnd == null) {
+            return studentRepository.findAll();
+        }
+        Long courseId = null;
+        if (courseName != null && !courseName.isEmpty()) {
+            courseId = Long.valueOf(courseName);
+        }
+        return studentRepository.search(studentName, courseId, studentEmail, markStart, markEnd);
     }
 }

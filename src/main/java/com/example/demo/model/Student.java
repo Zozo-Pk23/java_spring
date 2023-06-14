@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,10 +17,11 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "MARK", nullable = false)
+    @Column(name = "MARK")
+    @NotNull(message = "Mark is required")
     @Min(value = 0, message = "Mark must be greater than or equal to 0")
     @Max(value = 100, message = "Mark must be less than or equal to 100")
-    private int mark;
+    private Integer mark;
 
     @Column(name = "NAME", nullable = false)
     @NotBlank(message = "Student Name is required")

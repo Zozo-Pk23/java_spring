@@ -33,7 +33,7 @@
                 </select>
             </div>
             <div class="row">
-                <input th:field="*{mark}" type="text" placeholder="Mark" class="form-control mb-4 col-4">
+                <input th:field="*{mark}" type="text" placeholder="Mark" class="form-control mb-4 col-4" id="mark">
                 <span th:if="${#fields.hasErrors('mark')}" th:errors="*{mark}"
                     class="text-danger mx-4"></span>
             </div>

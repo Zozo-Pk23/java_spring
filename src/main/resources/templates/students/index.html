@@ -17,7 +17,7 @@
                 <input type="text" class="form-control mb-4 col-4 mx-3" name="studentName" placeholder="Student Name" >
                 <input type="text" class="form-control mb-4 col-4 mx-3" name="studentEmail" placeholder="Student Email">
                 <select class="form-control mb-4 col-3 mx-1" name="courseName">
-                    <option style="display: none;">courseName</option>
+                    <option style="display: none;" th:value=null>courseName</option>
                     <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.courseName}">
                     </option>
                 </select>
